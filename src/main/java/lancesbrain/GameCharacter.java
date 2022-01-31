@@ -38,7 +38,7 @@ public abstract class GameCharacter {
         //checks to see if equip map has matching slot
         if(equipped.get(item.getEquipSlot()) != null) {
             equipped.put(item.getEquipSlot(), item);
-            myContainer.removeItem(item);
+            myContainer.removeItem(item, false);
         }
     }
     //TODO make unequipItem method, put item into inventory when unequipped

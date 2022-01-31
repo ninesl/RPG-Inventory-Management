@@ -14,30 +14,28 @@ public class ItemContainer extends HashMap<Item, Integer> {
         return nameOfContainer;
     }
 
-    //gainItem() and removeItem() used in overloaded methods when gaining items or removing items
-    //this. used for clarity for myself
-    //used in tandem
-    public void swapItems(ItemContainer itemSource, Item takenItem) {
-        itemSource.removeItem(takenItem);
-        this.gainItem(takenItem);
-        System.out.println(takenItem.getItemName() + " given to " + this.getNameOfContainer() + " from " + itemSource.getNameOfContainer());
-    }
+    //Notify user if message is true
+    //Equipping/unequipping item message would be false, implied that it is no longer in inventory and is equipped
     public void gainItem(Item gainedItem, boolean message) {
-        System.out.println(gainedItem.getItemName() + " added to " + getNameOfContainer());
+        if(message)
+            System.out.println(gainedItem.getItemName() + " added to " + getNameOfContainer());
         gainItem(gainedItem);
     }
     public void removeItem(Item removedItem, boolean message) {
-        System.out.println(removedItem.getItemName() + " removed from " + getNameOfContainer());
+        if(message)
+            System.out.println(removedItem.getItemName() + " removed from " + getNameOfContainer());
         removeItem(removedItem);
     }
-    public void gainItem(Item gainedItem) {
+
+    //private use only as public overload forces decision to notify user or not
+    private void gainItem(Item gainedItem) {
         if (containsKey(gainedItem)) {
             this.put(gainedItem, get(gainedItem) + 1);
         } else {
             this.put(gainedItem, 1);
         }
     }
-    public void removeItem(Item removedItem) {
+    private void removeItem(Item removedItem) {
         if(containsKey(removedItem)) { //if item doesn't exist print err message.
             if(get(removedItem) > 1) {
                 this.put(removedItem, get(removedItem) - 1);
@@ -50,6 +48,14 @@ public class ItemContainer extends HashMap<Item, Integer> {
         }
     }
 
+    //used in tandem
+    public void swapItems(ItemContainer itemSource, Item takenItem) {
+        itemSource.removeItem(takenItem);
+        this.gainItem(takenItem);
+        System.out.println(takenItem.getItemName() + " given to " + this.getNameOfContainer() + " from " + itemSource.getNameOfContainer());
+    }
+
+    //Lists items from this instance of ItemContainer
     public void listItems() {
         //ConsoleGraphics.clearScreen(); to be used in gameloop
         System.out.println();
