@@ -2,14 +2,15 @@ package lancesbrain;
 
 //All items that are able to be equipped by a Character
 public class ItemEquipment extends Item {
-    private String equipSlot = null; //head, chest, hands, legs, feet, weapon, shield, charm
+    private EquipSlot equipSlot; //head, chest, hands, legs, feet,
+                                     //weapon, shield, charm??
 
-    public ItemEquipment(String itemName, String itemDesc, String slot) {
+    public ItemEquipment(String itemName, String itemDesc, EquipSlot equipSlot) {
         super(itemName, itemDesc);
-        this.equipSlot = slot;
+        this.equipSlot = equipSlot;
     }
 
-    public String getEquipSlot() {
+    public EquipSlot getEquipSlot() {
         return equipSlot;
     }
 }

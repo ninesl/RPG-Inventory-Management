@@ -5,7 +5,7 @@ import java.util.HashMap;
 //ALWAYS DEFINED AS <ITEM, INTEGER>, item being the actual item integer being how many
                                     //Has to be this type of hashmap, pretty cool TBH
 public class ItemContainer extends HashMap<Item, Integer> {
-    private String nameOfContainer = null; //used as descriptor for bug testing, may be utilited later
+    private String nameOfContainer = null;
     public ItemContainer(String nameOfContainer) {
         super();
         this.nameOfContainer = nameOfContainer;
@@ -17,17 +17,17 @@ public class ItemContainer extends HashMap<Item, Integer> {
     //Notify user if message is true
     //Equipping/unequipping item message would be false, implied that it is no longer in inventory and is equipped
     public void gainItem(Item gainedItem, boolean message) {
+        gainItem(gainedItem);
         if(message)
             System.out.println(gainedItem.getItemName() + " added to " + getNameOfContainer());
-        gainItem(gainedItem);
     }
     public void removeItem(Item removedItem, boolean message) {
-        if(message)
-            System.out.println(removedItem.getItemName() + " removed from " + getNameOfContainer());
         removeItem(removedItem);
+        if(message)//could check to see if removedItem actually removed, definitely overkill bc of logic in removeItem
+            System.out.println(removedItem.getItemName() + " removed from " + getNameOfContainer());
     }
 
-    //private use only as public overload forces decision to notify user or not
+    //private use only, public overload forces decision to notify user or not
     private void gainItem(Item gainedItem) {
         if (containsKey(gainedItem)) {
             this.put(gainedItem, get(gainedItem) + 1);
@@ -37,9 +37,9 @@ public class ItemContainer extends HashMap<Item, Integer> {
     }
     private void removeItem(Item removedItem) {
         if(containsKey(removedItem)) { //if item doesn't exist print err message.
-            if(get(removedItem) > 1) {
+            if(this.get(removedItem) > 1) {
                 this.put(removedItem, get(removedItem) - 1);
-            } else if(get(removedItem) == 1) {
+            } else if(this.get(removedItem) == 1) {
                 this.remove(removedItem); //removes item completely from this item container
             }
         } else { //err message, SHOULD NEVER HAPPEN, USED FOR INTERNAL GAME TESTING
@@ -58,7 +58,6 @@ public class ItemContainer extends HashMap<Item, Integer> {
     //Lists items from this instance of ItemContainer
     public void listItems() {
         //ConsoleGraphics.clearScreen(); to be used in gameloop
-        System.out.println();
         System.out.println(getNameOfContainer());
         ConsoleGraphics.printBannerLine();
         if(!this.isEmpty()) {

@@ -4,46 +4,57 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class GameCharacter {
+
     protected String name;
     protected Integer lvl;
     protected ItemContainer inventory;
-    protected Map<String, ItemEquipment> equipped = new HashMap<>();
+    protected Map<EquipSlot, ItemEquipment> equipped = new HashMap<>();
+
 
     public GameCharacter(String name, Integer lvl) {
         this.name = name;
         this.lvl = lvl;
         inventory = new ItemContainer(name + "'s Inventory");
-        equipped.put("heads", null);
-        equipped.put("chest", null);
-        equipped.put("hands", null);
-        equipped.put("legs", null);
-        equipped.put("feet", null);
-        equipped.put("right hand", null);
-        equipped.put("left hand", null);
+        equipped.put(EquipSlot.HEAD, null);
+        equipped.put(EquipSlot.CHEST, null);
+        equipped.put(EquipSlot.HANDS, null);
+        equipped.put(EquipSlot.LEGS, null);
+        equipped.put(EquipSlot.FEET, null);
+        //equipped.put("right hand", null);
+        //equipped.put("left hand", null);
     }
 
-    public Map<String, ItemEquipment> getEquipped() {
+    public Map<EquipSlot, ItemEquipment> getEquipped() {
         return equipped;
     }
 
-    //Equips valid ITEM EQUIPMENT to character
-    public void equipItem(ItemEquipment item) {
-        //checks to see if equip map has matching slot
+    //If something is already equipped will remove it
+    private void equipItem(ItemEquipment item) {
+        System.out.println(name + " has equipped " + item.getItemName());
+
+        //checks to see if equipped map already has in it
         if(equipped.get(item.getEquipSlot()) != null) {
-            equipped.put(item.getEquipSlot(), item);
+            unequipItemToContainer(equipped.get(item.getEquipSlot()), inventory);
+        }
+
+        equipped.put(item.getEquipSlot(), item);
+    }
+    //overwrites equipped to be null, AKA destroy item in EquipSlot
+    private void unequipItem(EquipSlot equipSlot) {
+        if(equipped.get(equipSlot) != null) {
+            equipped.put(equipSlot, null);
         }
     }
-    //Overloaded method that will remove item from given container
-    public void equipItem(ItemEquipment item, ItemContainer myContainer) {
-        //checks to see if equip map has matching slot
-        if(equipped.get(item.getEquipSlot()) != null) {
-            equipped.put(item.getEquipSlot(), item);
-            myContainer.removeItem(item, false);
-        }
+
+    //method that will remove item from given container
+    //PLAYERS INVENTORY MUST BE USED WHEN UNEQUIPPING
+    public void equipItemFromContainer(ItemEquipment item, ItemContainer myContainer) {
+        myContainer.removeItem(item, true);
+        equipItem(item);
     }
-    //TODO make unequipItem method, put item into inventory when unequipped
-    /*
-    public void putItemInInventory(Item item) {
-        inventory.gainItem(item);
-    }*/
+    //Must have destination when unequipping, will be player's inventory 99% of the time
+    public void unequipItemToContainer(ItemEquipment item, ItemContainer myContainer) {
+        myContainer.gainItem(item, true);
+        unequipItem(item.getEquipSlot());
+    }
 }
