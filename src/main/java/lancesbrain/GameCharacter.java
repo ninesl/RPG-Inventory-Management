@@ -28,6 +28,8 @@ public abstract class GameCharacter {
         return equipped;
     }
 
+    //TODO add isEquipped(EquipSlot) returns true if EquipSlot has an ItemEquipment in map equipped
+
     //If something is already equipped will remove it
     private void equipItem(ItemEquipment item) {
         System.out.println(name + " has equipped " + item.getItemName());
