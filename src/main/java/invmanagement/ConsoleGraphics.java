@@ -1,4 +1,4 @@
-package lancesbrain;
+package invmanagement;
 
 public class ConsoleGraphics {
 

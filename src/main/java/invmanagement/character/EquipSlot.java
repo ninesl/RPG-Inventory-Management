@@ -1,4 +1,4 @@
-package lancesbrain;
+package invmanagement.character;
 
 public enum EquipSlot {
     HEAD, CHEST, HANDS, LEGS, FEET

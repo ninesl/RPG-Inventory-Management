@@ -1,4 +1,6 @@
-package lancesbrain;
+package invmanagement.item;
+
+import invmanagement.character.EquipSlot;
 
 //All items that are able to be equipped by a Character
 public class ItemEquipment extends Item {

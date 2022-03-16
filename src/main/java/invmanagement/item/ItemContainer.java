@@ -1,4 +1,6 @@
-package lancesbrain;
+package invmanagement.item;
+
+import invmanagement.ConsoleGraphics;
 
 import java.util.HashMap;
 
@@ -48,8 +50,8 @@ public class ItemContainer extends HashMap<Item, Integer> {
         }
     }
 
-    //used in tandem
-    public void swapItems(ItemContainer itemSource, Item takenItem) {
+    //TODO swapItems should be default gainItem method? change method name to match function?
+    public void takeItem(ItemContainer itemSource, Item takenItem) {
         itemSource.removeItem(takenItem);
         this.gainItem(takenItem);
         System.out.println(takenItem.getItemName() + " given to " + this.getNameOfContainer() + " from " + itemSource.getNameOfContainer());

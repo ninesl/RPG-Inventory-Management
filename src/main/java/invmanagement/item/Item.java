@@ -1,4 +1,4 @@
-package lancesbrain;
+package invmanagement.item;
 
 public class Item {
     private String itemName = null;

@@ -1,4 +1,7 @@
-package lancesbrain;
+package invmanagement.character;
+
+import invmanagement.item.ItemContainer;
+import invmanagement.item.ItemEquipment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +30,7 @@ public abstract class GameCharacter {
     public Map<EquipSlot, ItemEquipment> getEquipped() {
         return equipped;
     }
+    public ItemContainer getInventory() { return inventory; }
 
     //TODO add isEquipped(EquipSlot) returns true if EquipSlot has an ItemEquipment in map equipped
 
@@ -41,6 +45,7 @@ public abstract class GameCharacter {
 
         equipped.put(item.getEquipSlot(), item);
     }
+
     //overwrites equipped to be null, AKA destroy item in EquipSlot
     private void unequipItem(EquipSlot equipSlot) {
         if(equipped.get(equipSlot) != null) {
@@ -54,6 +59,7 @@ public abstract class GameCharacter {
         myContainer.removeItem(item, true);
         equipItem(item);
     }
+
     //Must have destination when unequipping, will be player's inventory 99% of the time
     public void unequipItemToContainer(ItemEquipment item, ItemContainer myContainer) {
         myContainer.gainItem(item, true);
